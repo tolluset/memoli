@@ -5,26 +5,26 @@ import "testing"
 func TestAddMemo(t *testing.T) {
 	memos := []Memo{
 		{
-			id:         "1",
-			title:      "title1",
-			content:    "content1",
-			created_at: "2021-01-01",
-			updated_at: "2021-01-01",
+			ID:        "1",
+			Title:     "title1",
+			Content:   "content1",
+			CreatedAt: "2021-01-01",
+			UpdatedAt: "2021-01-01",
 		},
 		{
-			id:         "2",
-			title:      "title2",
-			content:    "content2",
-			created_at: "2021-01-02",
-			updated_at: "2021-01-02",
+			ID:        "2",
+			Title:     "title2",
+			Content:   "content2",
+			CreatedAt: "2021-01-02",
+			UpdatedAt: "2021-01-02",
 		},
 	}
 	newMemo := Memo{
-		id:         "3",
-		title:      "title3",
-		content:    "content3",
-		created_at: "2021-01-03",
-		updated_at: "2021-01-03",
+		ID:        "3",
+		Title:     "title3",
+		Content:   "content3",
+		CreatedAt: "2021-01-03",
+		UpdatedAt: "2021-01-03",
 	}
 	got := AddMemo(memos, newMemo)
 	if len(got) != 3 {
@@ -35,18 +35,18 @@ func TestAddMemo(t *testing.T) {
 func TestGetMemos(t *testing.T) {
 	memos := []Memo{
 		{
-			id:         "1",
-			title:      "title1",
-			content:    "content1",
-			created_at: "2021-01-01",
-			updated_at: "2021-01-01",
+			ID:        "1",
+			Title:     "title1",
+			Content:   "content1",
+			CreatedAt: "2021-01-01",
+			UpdatedAt: "2021-01-01",
 		},
 		{
-			id:         "2",
-			title:      "title2",
-			content:    "content2",
-			created_at: "2021-01-02",
-			updated_at: "2021-01-02",
+			ID:        "2",
+			Title:     "title2",
+			Content:   "content2",
+			CreatedAt: "2021-01-02",
+			UpdatedAt: "2021-01-02",
 		},
 	}
 	got := GetMemos(memos)
@@ -58,16 +58,16 @@ func TestGetMemos(t *testing.T) {
 func TestGetMemo(t *testing.T) {
 	memos := []Memo{
 		{
-			id:         "1",
-			title:      "title1",
-			content:    "content1",
-			created_at: "2021-01-01",
-			updated_at: "2021-01-01",
+			ID:        "1",
+			Title:     "title1",
+			Content:   "content1",
+			CreatedAt: "2021-01-01",
+			UpdatedAt: "2021-01-01",
 		},
 	}
 
 	tests := []struct {
-		id   string
+		ID   string
 		want string
 	}{
 		{"1", "1"},
@@ -75,9 +75,9 @@ func TestGetMemo(t *testing.T) {
 	}
 
 	for _, test := range tests {
-		got := GetMemo(memos, test.id)
-		if got.id != test.want {
-			t.Errorf("GetMemo() = %s; want %s", got.id, test.want)
+		got := GetMemo(memos, test.ID)
+		if got.ID != test.want {
+			t.Errorf("GetMemo() = %s; want %s", got.ID, test.want)
 		}
 	}
 }
@@ -85,48 +85,48 @@ func TestGetMemo(t *testing.T) {
 func TestUpdateMemo(t *testing.T) {
 	memos := []Memo{
 		{
-			id:         "1",
-			title:      "title1",
-			content:    "content1",
-			created_at: "2021-01-01",
-			updated_at: "2021-01-01",
+			ID:        "1",
+			Title:     "title1",
+			Content:   "content1",
+			CreatedAt: "2021-01-01",
+			UpdatedAt: "2021-01-01",
 		},
 		{
-			id:         "2",
-			title:      "title2",
-			content:    "content2",
-			created_at: "2021-01-02",
-			updated_at: "2021-01-02",
+			ID:        "2",
+			Title:     "title2",
+			Content:   "content2",
+			CreatedAt: "2021-01-02",
+			UpdatedAt: "2021-01-02",
 		},
 	}
 	updatedMemo := Memo{
-		id:         "1",
-		title:      "title1",
-		content:    "content1",
-		created_at: "2021-01-01",
-		updated_at: "2021-01-03",
+		ID:        "1",
+		Title:     "title1",
+		Content:   "content1",
+		CreatedAt: "2021-01-01",
+		UpdatedAt: "2021-01-03",
 	}
 	got := UpdateMemo(memos, updatedMemo)
-	if got[0].updated_at != "2021-01-03" {
-		t.Errorf("UpdateMemo() = %s; want 2021-01-03", got[0].updated_at)
+	if got[0].UpdatedAt != "2021-01-03" {
+		t.Errorf("UpdateMemo() = %s; want 2021-01-03", got[0].UpdatedAt)
 	}
 }
 
 func TestDeleteMemo(t *testing.T) {
 	memos := []Memo{
 		{
-			id:         "1",
-			title:      "title1",
-			content:    "content1",
-			created_at: "2021-01-01",
-			updated_at: "2021-01-01",
+			ID:        "1",
+			Title:     "title1",
+			Content:   "content1",
+			CreatedAt: "2021-01-01",
+			UpdatedAt: "2021-01-01",
 		},
 		{
-			id:         "2",
-			title:      "title2",
-			content:    "content2",
-			created_at: "2021-01-02",
-			updated_at: "2021-01-02",
+			ID:        "2",
+			Title:     "title2",
+			Content:   "content2",
+			CreatedAt: "2021-01-02",
+			UpdatedAt: "2021-01-02",
 		},
 	}
 	got := DeleteMemo(memos, "1")
