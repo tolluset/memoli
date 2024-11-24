@@ -4,7 +4,10 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"os/signal"
 	"strconv"
+	"strings"
+	"syscall"
 	"time"
 )
 
@@ -17,9 +20,19 @@ type Memo struct {
 }
 
 func main() {
-	memos := []Memo{}
+	memos := loadFromFile()
 
 	scanner := bufio.NewScanner(os.Stdin)
+
+	sigs := make(chan os.Signal, 1)
+	signal.Notify(sigs, syscall.SIGINT, syscall.SIGTERM)
+
+	go func() {
+		<-sigs
+		fmt.Println("Interrupted")
+		saveToFile(memos)
+		os.Exit(1)
+	}()
 
 	for {
 		fmt.Print("Enter command: ")
@@ -61,8 +74,44 @@ func main() {
 		}
 	}
 
+	saveToFile(memos)
+
 	fmt.Print(memos)
 	fmt.Printf("%+v\n", memos)
+}
+
+func saveToFile(memos []Memo) {
+	file, err := os.Create("data/memo.txt")
+	if err != nil {
+		fmt.Println(err)
+	}
+	defer file.Close()
+	for _, memo := range memos {
+		fmt.Fprintf(file, "%s,%s,%s,%s,%s\n", memo.ID, memo.Title, memo.Content, memo.CreatedAt, memo.UpdatedAt)
+	}
+}
+
+func loadFromFile() []Memo {
+	file, err := os.Open("memo.txt")
+	if err != nil {
+		fmt.Println(err)
+	}
+	defer file.Close()
+	var memos []Memo
+	scanner := bufio.NewScanner(file)
+	for scanner.Scan() {
+		line := scanner.Text()
+		fields := strings.Split(line, ",")
+		memo := Memo{
+			ID:        fields[0],
+			Title:     fields[1],
+			Content:   fields[2],
+			CreatedAt: fields[3],
+			UpdatedAt: fields[4],
+		}
+		memos = append(memos, memo)
+	}
+	return memos
 }
 
 func AddMemo(memos []Memo, newMemo Memo) []Memo {
