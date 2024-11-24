@@ -81,6 +81,13 @@ func main() {
 }
 
 func saveToFile(memos []Memo) {
+	dir := "data"
+	err := os.MkdirAll(dir, os.ModePerm)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
 	file, err := os.Create("data/memo.txt")
 	if err != nil {
 		fmt.Println(err)
@@ -92,7 +99,7 @@ func saveToFile(memos []Memo) {
 }
 
 func loadFromFile() []Memo {
-	file, err := os.Open("memo.txt")
+	file, err := os.Open("data/memo.txt")
 	if err != nil {
 		fmt.Println(err)
 	}
